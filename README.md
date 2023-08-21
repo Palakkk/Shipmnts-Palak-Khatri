@@ -11,7 +11,7 @@ Email: john@gmail.com
 Password:1
 
 The zip file can be downloaded directly from GitHub.
-
+use the master branch demo folder
 
 code to run:
 python manage.py makemigrations
