@@ -13,7 +13,10 @@ Password:1
 The zip file can be downloaded directly from GitHub.
 
 To access the zio file got to #master# branch and then to demo folder
+
 code to run:
 python manage.py makemigrations
+
 python manage.py migrate
+
 python manage.py runserver
