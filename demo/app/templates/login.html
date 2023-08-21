@@ -1,0 +1,78 @@
+{% extends 'common.html' %}
+
+{% block content %}
+
+{% load static %}
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+    <head>
+        <title> login form </title>
+
+        <!-- Meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!-- Google fonts -->
+        <link href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+
+        <!-- CSS Stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %} " type="text/css" media="all" />
+    <style>
+    
+    </style>
+    </head>
+
+    <body>
+        <div class="">
+
+            <!-- main content -->
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-6">
+                        <div class="login-form">
+                        
+                            <h2 class="form-title">Log In</h2>
+                            <form method="post" class="form">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email"
+                                        placeholder="Email" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password"
+                                        placeholder="Password" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary">Login Now</button>
+                                {% comment %} <a href="{% url 'forgot' %}" class="link-style">Forgot Password?</a> {% endcomment %}
+                                
+                                <a href="{% url 'register1' %}" class="link-style">User Register</a>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- //main content -->
+            {% if message %}
+            <script>alert("{{message}}")</script>{% endif %}
+
+        </div>
+
+        <!-- fontawesome v5-->
+        <script src="{% static 'js/fontawesome.js' %} "></script>
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@1.16.1/dist/umd/popper.min.js"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    </body>
+
+</html>
+
+{% endblock %}

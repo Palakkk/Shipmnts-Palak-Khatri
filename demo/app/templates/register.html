@@ -1,0 +1,65 @@
+{% extends 'common.html' %}
+
+{% block content %}
+
+{% load static %}
+<!--
+Author: W3layouts
+Author URL: http://w3layouts.com
+-->
+<!DOCTYPE html>
+<html lang="zxx">
+
+    <head>
+        <title>Register form</title>
+
+        <!-- Meta tags -->
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+        <!-- CSS Stylesheet -->
+        <link rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css" media="all" />
+
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-lg-6">
+                    <div class="register-form">
+                        <h2 class="form-title">Register</h2>
+                        <form method="post" class="form">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <label for="username">Name</label>
+                                <input type="text" class="form-control" id="name" name="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control" id="password" name="password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Register Now</button>
+                            {% comment %} <a href="{% url 'forgot' %}" class="link-style">Forgot Password?</a> {% endcomment %}
+                                <a href="{% url 'login1' %}" class="link-style">User Login</a>
+                        </form>
+                    </div>
+                    {% if message %}
+                    <script>alert("{{ message }}")</script>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <!-- fontawesome v5 -->
+        <script src="{% static 'js/fontawesome.js' %}"></script>
+
+    </body>
+
+</html>
+
+{% endblock %}

@@ -1,0 +1,242 @@
+{% extends 'common.html' %}
+
+{% block content %}
+<style>
+/* navAVBAR---------- */
+/* #navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+} */
+body{
+  background-color: whitesmoke;
+}
+#left-section{
+  /* top: 80px; */
+  overflow: hidden;
+}
+#middle-section{
+  /* top: 80px; */
+  height: calc(100vh - 151px) ;
+  overflow: auto;
+}
+
+/* #right-section{
+  top: 80px;
+} */
+#bg-img{
+  height:436px; 
+  background-size: cover;
+  margin:-15px;
+}
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+#pro_pic { 
+  position: relative;
+  object-fit: cover;
+  overflow: hidden;
+} 
+.font-increase{
+  font-size: 1.2rem;
+}
+/* Like button--------- */
+.unlike-button {
+  color:red;
+  /* background: red; */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.unlike-button:hover {
+  color:grey;
+  background: none;
+  border: none;
+  padding-right: 4px;
+  cursor: pointer;
+}
+.like-button{
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.like-button:hover{
+  color:red;
+  background:none;
+  border: none;
+  padding-right: 4px;
+  cursor: pointer;
+}
+.like-number:hover{
+  color: grey;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+.comment-button{
+  color:rgb(56, 179, 255);
+  /* background: none; */
+  border: none;
+  padding: 0;
+  cursor: pointer;
+}
+.comment-button:hover{
+  color:rgb(56, 179, 255);
+  background:none ;
+  border: none;
+  padding: 0 4px;
+  cursor: pointer;
+}
+/* ------------------------ */
+
+.custom-toggler {
+  border:none; /* Customize the border color */
+}
+
+.custom-toggler:hover {
+  border:none; /* Customize the hover state border color */
+}
+
+@media (max-width: 768px) {
+  #left-section, #right-section{
+      display: none;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+      min-width: 576px;
+  }
+}
+</style>
+
+{% load static %}
+
+
+
+    <!---------------------------------------Middle columns  start---------------->
+    <div class="col-12 col-lg-6" >
+        <div class="middle-column">
+            <div class="card-header card mb-2 bg-transparent">
+                <form method="post" class="form">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="Question">Question</label>
+                    <input type="text" class="form-control" id="question" name="question" required>
+                    <button type="submit" class="btn btn-primary">Go</button>
+                </div>
+                    {% comment %} <a href="{% url 'forgot' %}" class="link-style">Forgot Password?</a> {% endcomment %}
+                    
+                </form>
+                    
+                </div>
+                <div class="card mb-2" id="middle-section">
+
+                {% for post in all_ques %}
+                <div class="card mb-3">
+                    <div class="card-header">
+                        {% comment %} <img src="{{ post.user.portfolio_img.url }}" alt="profile picture"
+                            class="rounded-circle" width="30px" height="30px"> {% endcomment %}
+                        <span class="ml-2">@{{ post.user.name }}</span>
+                        <span class="text-black-50 ml-2">{{ post.created_at }}</span>
+                        {% comment %} <span class="text-black-50 ml-2">From {{ post.user.ufrom }}</span> {% endcomment %}
+                    </div>
+                    <div class="card-body p-0">
+                        <p class="card-text p-2">{{ post.question }}</p>
+                    </div>
+                    {% comment %} <div class="card-footer">
+                        <div class="d-flex align-items-center">
+                            <!-- Display the like button -->
+                            {% if data in post.likes.all %}
+                            <button class="unlike-button btn btn-lg btn-outline-secondary"
+                                data-post-id="{{ post.id }}"><i class="fas fa-heart"></i></button>
+                            {% else %}
+                            <button class="like-button btn btn-lg btn-outline-secondary"
+                                data-post-id="{{ post.id }}"><i class="far fa-heart"></i></button>
+                            {% endif %}
+                            <div class="btn-outline-secondary pl-1 mr-3 like-number"><span
+                                    id="like-count-{{ post.id }}">{{ post.likes.count }}</span></div>
+
+                            <!-- Button to trigger the modal -->
+                            <button class="btn btn-outline-secondary btn-lg ml-2 comment-button"
+                                data-toggle="modal" data-target="#postModal{{ post.id }}"><i
+                                    class="far fa-comment"></i></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="postModal{{ post.id }}" tabindex="-1" role="dialog"
+                                aria-labelledby="postModalLabel{{ post.id }}" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="postModalLabel{{ post.id }}">
+                                                Comments
+                                            </h5>
+                                            <button type="button" class="close" data-dismiss="modal"
+                                                aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+
+                                        <!-- Comment section -->
+                                        <div class="modal-body">
+                                            <div class="comment-section">
+                                                <!-- Display existing comments -->
+                                                {% for comment in post_comments %}
+                                                {% if comment.post == post%}
+                                                {%for i in comment.comments%}
+                                                <div class="comment mb-1">
+                                                    <p class="mb-n1 mt-2 font-increase">{{ i.text }}</p>
+                                                    <small class="text-black-50">Posted by @{{ i.user.uname }} at
+                                                        {{ i.created_at }}</small>
+                                                </div>
+                                                {%endfor%}
+
+                                                {%endif%}
+                                                {% endfor %}
+
+                                                <!-- Comment form -->
+                                                <form class="comment-form pt-2" method="POST"
+                                                    action="{% url 'add_comment' %}">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="post" value="{{ post.id }}">
+                                                    <div class="form-group d-flex">
+                                                        <input class="form-control rounded-0" name="text"
+                                                            placeholder="Write a comment"></input>
+                                                        <button type="submit"
+                                                            class="btn btn-outline-primary rounded-0">Post</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <button class="btn btn-sm btn-outline-secondary ml-auto"><i
+                            class="far fa-bookmark"></i></button> -->
+                    </div> {% endcomment %}
+                    
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    </div>
+
+
+    <br> <br> <br><br> <br> <br>
+
+    <!------------------------Middle column Ends---------------->
+
+
+
+
+
+
+
+            
+</body>
+
+</html>
+{%endblock%}

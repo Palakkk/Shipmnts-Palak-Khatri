@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <!-- Google fonts -->
+        <link href="//fonts.googleapis.com/css?family=Nunito:400,700&display=swap" rel="stylesheet">
+
+        <!-- CSS Stylesheet -->
+        <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+        {% comment %} <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> {% endcomment %}
+
+    </head>
+<style>
+
+#navbar{
+  background-color: #333;
+  overflow: hidden;
+}
+
+/* Style the links inside the navigation bar */
+#navbar a {
+  float: left;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+/* Change the color of links on hover */
+#navbar a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+/* Add a color to the active/current link */
+#navbar a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+body{
+  background-color: whitesmoke;
+}
+#left-section{
+  /* top: 80px; */
+  overflow: hidden;
+}
+#middle-section{
+  /* top: 80px; */
+  height: calc(100vh - 151px) ;
+  overflow: auto;
+}
+
+
+.text-shadow {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.font-increase{
+  font-size: 1.2rem;
+}
+
+
+@media (max-width: 768px) {
+  #left-section, #right-section{
+      display: none;
+  }
+}
+@media (max-width: 768px) {
+  .container {
+      min-width: 576px;
+  }
+}
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+form {border: 3px solid #f1f1f1;}
+
+input[type=email], input[type=password], input[type=text] {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+}
+button {
+  background-color: #04AA6D;
+  color: white;
+  padding: 14px 20px;
+  margin: 8px 0;
+  border: none;
+  cursor: pointer;
+  width: 100%;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+</style>
+
+    <body>
+    <div class="container px-1">
+            <nav class="navbar navbar-expand-md navbar-dark mb-2 mt-3" id="navbar" style="background-color:#073b4c">
+                <div class="collapse navbar-collapse" id="responsive">
+                    {% if 'email' in request.session %}
+                    <ul class="navbar-nav mr-auto text-capitalize font-weight-bold font-increase">
+                        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">Home</a></li>
+                        {% comment %} <li class="nav-item"><a href="{% url 'createQ' %}" class="nav-link">Create Q</a></li>               {% endcomment %}
+                        <li class="nav-item"><a href="{% url 'logout1' %}" class="nav-link">logout</a></li>
+                    </ul>
+                    {% comment %} <form method="GET" action="{% url 'search_profile' %}" class="form-inline ml-auto d-md-block py-2">
+                        <input type="hidden" name="search" value="{{ request.GET.search }}">
+                        <input type="text" name="q" id="search" placeholder="Search"
+                        class="form-control form-control-sm" value="{{ request.GET.q }}">
+                    </form> {% endcomment %}
+                    {% else %}
+                    <ul class="navbar-nav mr-auto text-capitalize font-weight-bold font-increase">
+                        <li class="nav-item"><a href="{% url 'index' %}" class="nav-link">home</a></li>
+                        {% comment %} <li class="nav-item"><a href="{% url 'profile1' request.session.user_id %}"
+                                class="nav-link">profile</a></li> {% endcomment %}
+                        <li class="nav-item"><a href="{% url 'logout1' %}" class="nav-link">Login</a></li>
+                        <li class="nav-item"><a href="{% url 'register1' %}" class="nav-link">Register</a></li>
+                    </ul>
+                    {% endif %}
+                    
+                </div>
+            </nav>
+        </div>
+
+           <div class="container py-5 mt-3">
+            {% block content %}
+
+            {% endblock %}
+        </div>
+            </body>
+
+</html>
